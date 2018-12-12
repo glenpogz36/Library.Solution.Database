@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>Add a new  Patron to be checkout</h1>
+<form action="/patrons" method="post">
+<label name="patronname">Create a Patron </label>
+<input name="patronname" id="patronname" type="text">
+ <button class="btn btn-primary" type='submit'>Add new Patron</button>
+</form>
+</div>
+<hr>
+<a href="/patrons" class="btn btn-info">Back to Patron</a>

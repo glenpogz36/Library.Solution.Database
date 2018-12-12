@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>Here are all the available Authors</h1>
+<ol>
+@foreach (var author in Model)
+{
+    <li><a href="/authors/@author.GetId()">@author.GetName() </a></li>
+}
+</ol>
+</div>
+<hr>
+<a href="/authors/new" class="btn btn-success">Add new Author</a>

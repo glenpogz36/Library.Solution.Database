@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>Here are all the available Books</h1>
+<ol>
+@foreach (var book in Model)
+{
+    <li><a href="/books/@book.GetId()">@book.GetTitle() </a></li>
+}
+</ol>
+</div>
+<a href="/books/new" class="btn btn-success">Add new Book</a>

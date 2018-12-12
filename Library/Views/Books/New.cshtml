@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>Add a new  Book</h1>
+<form action="/books" method="post">
+<label name="booktitle">Title of the Book </label>
+<input name="booktitle" id="booktitle" type="text">
+<select id="bookauthor" name="bookauthor">
+  @foreach (var author in Model)
+  {
+    <option value=@author.GetId()>@author.GetName()</option>
+  }
+</select>
+<label name="copies">Enter number of copies </label>
+<input name="copies" id="copies" type="number">
+ <button class="btn btn-primary" type='submit'>Add new Book</button>
+</form>
+</div>
+<hr>
+<a href="/books" class="btn btn-info">Back to Books</a>
