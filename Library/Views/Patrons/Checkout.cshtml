@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>Checkout a new  Book</h1>
+<form action='/patrons/@Model["patron"].GetId()' method="post">
+<select id="checkoutBook" name="checkoutBook">
+  @foreach (var availablebook in Model["availableBooks"])
+  {
+    <option value=@availablebook.GetId()>@availablebook.GetTitle()</option>
+  }
+</select>
+<label name="dueDate">Due date </label>
+<input name="dueDate" id="dueDate" type="date">
+
+<button class="btn btn-primary" type='submit'>Checkout book</button>
+</form>
+</div>
+<hr>
+<a href="/patrons" class="btn btn-info">Back to Patrons</a>

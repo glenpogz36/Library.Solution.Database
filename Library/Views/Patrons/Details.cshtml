@@ -1,0 +1,10 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>List of all checkout books for @Model.GetName()</h1>
+
+</div>
+<a href="/patrons/@Model.GetId()/checkout" class="btn btn-success">Checkout a book</a>
+<a href="/patrons" class="btn btn-success">Go back to patron's list</a>
