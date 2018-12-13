@@ -12,7 +12,7 @@ namespace Library.Controllers
             List<Book> allBooks= Book.GetAll();
             return View(allBooks);
         }
-             [HttpGet("/books/new")]
+        [HttpGet("/books/new")]
         public ActionResult New()
         {
              List<Author> allAuthors= Author.GetAll();
@@ -28,6 +28,18 @@ namespace Library.Controllers
             List<Book> allBooks= Book.GetAll();
 
             return View(allBooks);
+        }
+        [HttpGet("/books/{id}")]
+        public ActionResult Show(int id)
+        {
+            Dictionary<string,object> model = new Dictionary<string,object>();
+            Book book= Book.Find(id);
+            Author author= book.GetAuthor();
+            List<Patron> patrons = new List<Patrons>();
+            model.Add("book",book);
+            model.Add("author",author);
+            model.Add("patrons",patrons);
+            return View(model);
         }
     }
 }

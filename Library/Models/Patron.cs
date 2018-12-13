@@ -100,7 +100,7 @@ namespace Library.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO copies_pattrons (book_id,patron_id,due) VALUES (@bookId,@patronId,@dueDate);";
+            cmd.CommandText = @"INSERT INTO copies_patrons (book_id,patron_id,due) VALUES (@bookId,@patronId,@dueDate);";
 
             MySqlParameter book_id = new MySqlParameter();
             book_id.ParameterName = "@bookId";
@@ -123,6 +123,36 @@ namespace Library.Models
                 conn.Dispose();
             }
         }
+        public List<Book> GetBooks()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT books.* FROM patrons
+                JOIN copies_patrons ON (patrons.id = copies_patrons.patron_id)
+                JOIN books ON (copies_patrons.book_id = books.id)
+                WHERE patrons.id = @patronId;";
+            MySqlParameter patronIdParameter = new MySqlParameter();
+            patronIdParameter.ParameterName = "@patronId";
+            patronIdParameter.Value = _id;
+            cmd.Parameters.Add(patronIdParameter);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<Book> books = new List<Book>{};
+            while(rdr.Read())
+            {
+            int bookId = rdr.GetInt32(0);
+            string bookTitle = rdr.GetString(1);
+
+            Book newBook = new Book(bookTitle, bookId);
+            books.Add(newBook);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+            conn.Dispose();
+            }
+            return books;
+            }
 
     }
 }

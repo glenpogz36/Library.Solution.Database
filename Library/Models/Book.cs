@@ -155,16 +155,20 @@ namespace Library.Models
             }
             return availableBooks;
         }
-        public static void Checkout(int bookId)
+        public static void Checkout(int bookId,int copies)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"UPDATE copies SET copies_number = copies_number-1   WHERE id = @searchId;";
+            cmd.CommandText = @"UPDATE  copies SET copies_number = @copies_number   WHERE book_id = @searchId;";
             MySqlParameter searchId = new MySqlParameter();
             searchId.ParameterName = "@searchId";
             searchId.Value = bookId;
             cmd.Parameters.Add(searchId);
+            MySqlParameter copiesNumber = new MySqlParameter();
+            copiesNumber.ParameterName = "@copies_number";
+            copiesNumber.Value = copies;
+            cmd.Parameters.Add(copiesNumber);
             cmd.ExecuteNonQuery();
 
             conn.Close();
@@ -179,7 +183,7 @@ namespace Library.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM `books` WHERE id = @bookdId;";
+            cmd.CommandText = @"SELECT * FROM books WHERE id = @bookdId;";
 
             MySqlParameter bookdId = new MySqlParameter();
             bookdId.ParameterName = "@bookdId";
@@ -209,6 +213,97 @@ namespace Library.Models
             }
             return foundBook;
         }
+        public static int FindCopy(int Id)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM copies WHERE book_id = @bookdId;";
+
+            MySqlParameter bookdId = new MySqlParameter();
+            bookdId.ParameterName = "@bookdId";
+            bookdId.Value = Id;
+            cmd.Parameters.Add(bookdId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int copies = 0;
+
+
+
+            while (rdr.Read())
+            {
+                copies = rdr.GetInt32(2);
+
+            }
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return copies;
+        }
+
+public Author GetAuthor()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT authors.* FROM books
+                JOIN authors_books ON (books.id = authors_books.book_id)
+                JOIN authors ON (authors_books.author_id = authors.id)
+                WHERE books.id = @bookId;";
+            MySqlParameter bookIdParameter = new MySqlParameter();
+            bookIdParameter.ParameterName = "@bookId";
+            bookIdParameter.Value = _id;
+            cmd.Parameters.Add(bookIdParameter);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+    
+            while(rdr.Read())
+            {
+            int authorId = rdr.GetInt32(0);
+            string authorTitle = rdr.GetString(1);
+
+            Author newAuthor = new Author(authorTitle, authorId);
+            
+            }
+            conn.Close();
+            if (conn != null)
+            {
+            conn.Dispose();
+            }
+            return newAuthor;
+            }
+public List<Patron> GetPatrons()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT patrons.* FROM books
+                JOIN copies_patrons ON (books.id = copies_patrons.book_id)
+                JOIN patrons ON (copies_patrons.patron_id = patrons.id)
+                WHERE books.id = @bookId;";
+            MySqlParameter bookIdParameter = new MySqlParameter();
+            bookIdParameter.ParameterName = "@bookId";
+            bookIdParameter.Value = _id;
+            cmd.Parameters.Add(bookIdParameter);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<Patron> patrons = new List<Patron>{};
+            while(rdr.Read())
+            {
+            int patronId = rdr.GetInt32(0);
+            string patronName = rdr.GetString(1);
+
+            Patron newPatron = new Patron(patronName, patronId);
+            patrons.Add(newPatron);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+            conn.Dispose();
+            }
+            return patrons;
+            }
 
     }
 }
