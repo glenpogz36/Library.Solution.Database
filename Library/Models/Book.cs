@@ -258,15 +258,16 @@ public Author GetAuthor()
             bookIdParameter.Value = _id;
             cmd.Parameters.Add(bookIdParameter);
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-    
+            int authorId = 0;
+            string authorTitle = "";
             while(rdr.Read())
             {
-            int authorId = rdr.GetInt32(0);
-            string authorTitle = rdr.GetString(1);
+            authorId = rdr.GetInt32(0);
+            authorTitle = rdr.GetString(1);
 
-            Author newAuthor = new Author(authorTitle, authorId);
-            
             }
+            Author newAuthor = new Author(authorTitle, authorId);
+
             conn.Close();
             if (conn != null)
             {
@@ -274,7 +275,7 @@ public Author GetAuthor()
             }
             return newAuthor;
             }
-public List<Patron> GetPatrons()
+        public List<Patron> GetPatrons()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();

@@ -12,7 +12,7 @@ namespace Library.Controllers
             List<Author> allAuthors= Author.GetAll();
             return View(allAuthors);
         }
-           [HttpGet("/authors/new")]
+        [HttpGet("/authors/new")]
         public ActionResult New()
         {
             return View();
@@ -24,6 +24,16 @@ namespace Library.Controllers
             author.Save();
             List<Author> allAuthors= Author.GetAll();
             return View(allAuthors);
+        }
+        [HttpGet("/authors/{id}")]
+        public ActionResult Show(int id)
+        {
+            Dictionary<string,object> model= new Dictionary<string,object>();
+            Author author= Author.Find(id);
+            List<Book> authorBooks= author.GetBooks();
+            model.Add("author",author);
+            model.Add("authorBooks",authorBooks);
+            return View(model);
         }
     }
 }

@@ -55,6 +55,7 @@ namespace Library.Controllers
             Patron patron = Patron.Find(id);
             patron.AddCopiesPatrons(checkoutBook, dueDate);
             List<Book> patronBooks= patron.GetBooks();
+            
             model.Add("patron",patron);
             model.Add("patronBooks",patronBooks);
             return View(model);

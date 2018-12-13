@@ -65,41 +65,74 @@ namespace Library.Models
             }
             return allAuthors;
         }
-    public static Author Find(int Id)
-    {
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-
-      var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"SELECT * FROM `authors` WHERE id = @authorId;";
-
-      MySqlParameter authorId = new MySqlParameter();
-      authorId.ParameterName = "@authorId";
-      authorId.Value = Id;
-      cmd.Parameters.Add(authorId);
-
-      var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      int id = 0;
-      string authorNAme = "";
-    
-
-
-      while (rdr.Read())
-      {
-        id = rdr.GetInt32(0);
-        authorNAme = rdr.GetString(1);
-
-
-      }
-      Author foundAuthor = new Author(authorNAme, id);
-
-      conn.Close();
-      if(conn != null)
+        public static Author Find(int Id)
         {
-          conn.Dispose();
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM `authors` WHERE id = @authorId;";
+
+        MySqlParameter authorId = new MySqlParameter();
+        authorId.ParameterName = "@authorId";
+        authorId.Value = Id;
+        cmd.Parameters.Add(authorId);
+
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        int id = 0;
+        string authorNAme = "";
+        
+
+
+        while (rdr.Read())
+        {
+            id = rdr.GetInt32(0);
+            authorNAme = rdr.GetString(1);
+
+
         }
-        return foundAuthor;
-    }
+        Author foundAuthor = new Author(authorNAme, id);
+
+        conn.Close();
+        if(conn != null)
+            {
+            conn.Dispose();
+            }
+            return foundAuthor;
+        }
+
+        public List<Book> GetBooks()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT books.* FROM authors
+                JOIN authors_books ON (authors.id = authors_books.author_id)
+                JOIN books ON (authors_books.book_id = books.id)
+                WHERE authors.id = @authorId;";
+            MySqlParameter authurIdParameter = new MySqlParameter();
+            authurIdParameter.ParameterName = "@authorId";
+            authurIdParameter.Value = _id;
+            cmd.Parameters.Add(authurIdParameter);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            List<Book> books = new List<Book>{};
+            while(rdr.Read())
+            {
+            int bookId = rdr.GetInt32(0);
+            string bookTitle = rdr.GetString(1);
+
+            Book newBook = new Book(bookTitle, bookId);
+            books.Add(newBook);
+            }
+            conn.Close();
+            if (conn != null)
+            {
+            conn.Dispose();
+            }
+            return books;
+            }
+
 
     } 
+    
 }  

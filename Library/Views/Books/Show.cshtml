@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>The book @Model["book"].GetTitle() is written by <a href='/authors/@Model["author"].GetId()'>@Model["author"].GetName()</a></h1>
+<h3>This patrons checkout this book:</h3>
+<ol>
+@foreach (var patron in Model["patrons"])
+{
+  <li><a href='/patrons/@patron.GetId()'>@patron.GetName()</li>
+}
+</ol>
+</div>
+<a href="/books" class="btn btn-success">Go back to patron's list</a>

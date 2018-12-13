@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+<hr>
+<div class="container">
+<h1>The author @Model["author"].GetName() wrote this books</h1>
+<ol>
+@foreach (var book in Model["authorBooks"])
+{
+  <li><a href='/books/@book.GetId()'>@book.GetTitle()</a></li>
+}
+</ol>
+</div>
+<a href="/authors" class="btn btn-success">Go back to authors's list</a>
