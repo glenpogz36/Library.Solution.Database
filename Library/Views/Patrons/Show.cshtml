@@ -7,7 +7,7 @@
 <ol>
 @foreach (var book in Model["patronBooks"])
 {
-  <li><a href='/books/@book.GetId()'>@book.GetTitle()</a> the due Date is : </li>
+  <li><a href='/books/@book.GetId()'>@book.GetTitle()</a> the due Date is : @book.GetBookDueDate().ToString("yyyy-MM-dd")</li>
 }
 </ol>
 </div>

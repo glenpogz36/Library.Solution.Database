@@ -244,7 +244,7 @@ namespace Library.Models
             return copies;
         }
 
-public Author GetAuthor()
+        public Author GetAuthor()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
@@ -305,6 +305,33 @@ public Author GetAuthor()
             }
             return patrons;
             }
+        public DateTime GetBookDueDate()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT copies_patrons.* FROM books
+                JOIN copies_patrons ON (books.id = copies_patrons.book_id)
+                WHERE books.id = @bookId;";
+            MySqlParameter bookIdParameter = new MySqlParameter();
+            bookIdParameter.ParameterName = "@bookId";
+            bookIdParameter.Value = _id;
+            cmd.Parameters.Add(bookIdParameter);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+            DateTime dueDate = new DateTime();
+        
+            while(rdr.Read())
+            {
+            dueDate = rdr.GetDateTime(3);
+            }
 
+
+            conn.Close();
+            if (conn != null)
+            {
+            conn.Dispose();
+            }
+            return dueDate;
+            }
     }
 }

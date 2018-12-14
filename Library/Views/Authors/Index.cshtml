@@ -7,9 +7,10 @@
 <ol>
 @foreach (var author in Model)
 {
-    <li><a href="/authors/@author.GetId()">@author.GetName() </a></li>
+    <li><h2><a href="/authors/@author.GetId()">@author.GetName() </a></h2> <a href="/authors/@author.GetId()/edit" >Edit</a></li>
 }
 </ol>
 </div>
 <hr>
 <a href="/authors/new" class="btn btn-success">Add new Author</a>
+<
