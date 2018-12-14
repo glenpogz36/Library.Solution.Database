@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 13, 2018 at 01:49 AM
+-- Generation Time: Dec 14, 2018 at 02:25 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.0.15
 
@@ -38,16 +38,8 @@ CREATE TABLE `authors` (
 --
 
 INSERT INTO `authors` (`id`, `name`) VALUES
-(29, 'fdslkfja'),
-(30, 'JK Rowling'),
-(31, 'MS'),
-(32, 'philip pullman'),
-(33, 'pp'),
-(34, 'george rr martin'),
-(35, 'george rr martin'),
-(36, 'test'),
-(37, 'test'),
-(38, 'test2');
+(40, 'Leo Tolstoy'),
+(41, 'Marcel Proust');
 
 -- --------------------------------------------------------
 
@@ -66,15 +58,9 @@ CREATE TABLE `authors_books` (
 --
 
 INSERT INTO `authors_books` (`id`, `author_id`, `book_id`) VALUES
-(34, 29, 34),
-(35, 30, 35),
-(36, 31, 36),
-(37, 32, 37),
-(38, 33, 38),
-(39, 34, 39),
-(40, 35, 40),
-(41, 32, 44),
-(42, 38, 45);
+(44, 40, 47),
+(45, 41, 48),
+(46, 40, 49);
 
 -- --------------------------------------------------------
 
@@ -92,17 +78,9 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `title`) VALUES
-(34, 'hyperioin'),
-(35, 'Harry Potter'),
-(36, 'Cookbook'),
-(37, 'The golden compass'),
-(38, 'the subtle knife'),
-(39, 'game of thrones'),
-(40, 'a feast for crows'),
-(42, 'Test'),
-(43, 'Test'),
-(44, 'dwddw'),
-(45, 'Test');
+(47, 'Anna Karenina'),
+(48, 'In Search of Lost Time'),
+(49, 'War and Peace');
 
 -- --------------------------------------------------------
 
@@ -121,8 +99,9 @@ CREATE TABLE `copies` (
 --
 
 INSERT INTO `copies` (`id`, `book_id`, `copies_number`) VALUES
-(76, 44, 5),
-(77, 45, 3);
+(79, 47, 4),
+(80, 48, 3),
+(81, 49, 0);
 
 -- --------------------------------------------------------
 
@@ -142,9 +121,11 @@ CREATE TABLE `copies_patrons` (
 --
 
 INSERT INTO `copies_patrons` (`id`, `book_id`, `patron_id`, `due`) VALUES
-(8, 56, 5, '0001-01-01 00:00:00'),
-(9, 69, 7, '0001-01-01 00:00:00'),
-(10, 66, 7, '0001-01-01 00:00:00');
+(26, 48, 14, '2018-12-20 00:00:00'),
+(27, 49, 14, '2018-12-21 00:00:00'),
+(28, 47, 15, '2018-12-20 00:00:00'),
+(29, 49, 15, '2018-12-20 00:00:00'),
+(30, 49, 16, '2018-12-28 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -162,12 +143,10 @@ CREATE TABLE `patrons` (
 --
 
 INSERT INTO `patrons` (`id`, `name`) VALUES
-(5, 'Jnasty'),
-(6, 'Loizzle'),
-(7, 'C Money'),
-(8, 'gago'),
-(9, 'test'),
-(10, 'test');
+(14, 'Kaveh'),
+(15, 'Glen'),
+(16, 'James'),
+(17, 'Golzat');
 
 --
 -- Indexes for dumped tables
@@ -223,32 +202,32 @@ ALTER TABLE `patrons`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `authors_books`
 --
 ALTER TABLE `authors_books`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 --
 -- AUTO_INCREMENT for table `copies`
 --
 ALTER TABLE `copies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT for table `copies_patrons`
 --
 ALTER TABLE `copies_patrons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `patrons`
 --
 ALTER TABLE `patrons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

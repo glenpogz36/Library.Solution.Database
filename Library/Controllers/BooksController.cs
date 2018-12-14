@@ -41,5 +41,24 @@ namespace Library.Controllers
             model.Add("patrons",patrons);
             return View(model);
         }
+        [HttpGet("/books/{id}/edit")]
+        public ActionResult Edit(int id)
+        {
+            Book book = Book.Find(id);
+            return View(book);
+        }
+        [HttpPost("/books/{id}")]
+        public ActionResult Show(string newTitle, int id)
+        {
+            Book book = Book.Find(id);
+            book.Edit(newTitle);
+            Dictionary<string,object> model = new Dictionary<string,object>();
+            Author author= book.GetAuthor();
+            List<Patron> patrons = book.GetPatrons();
+            model.Add("book",book);
+            model.Add("author",author);
+            model.Add("patrons",patrons);
+            return View(model);
+        }
     }
 }

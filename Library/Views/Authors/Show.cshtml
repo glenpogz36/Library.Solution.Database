@@ -3,7 +3,7 @@
 }
 <hr>
 <div class="container">
-<h1>The author @Model["author"].GetName() wrote this books</h1>
+<h1>The author <a href='/authors'>@Model["author"].GetName()</a> wrote this books</h1>
 <ol>
 @foreach (var book in Model["authorBooks"])
 {

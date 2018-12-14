@@ -4,7 +4,7 @@
 <hr>
 <div class="container">
 <h1>Checkout a new  Book</h1>
-<form action='/patrons/@Model["patron"].GetId()' method="post">
+<form action='/patrons/@Model["patron"].GetId()/checkout/show' method="post">
 <select id="checkoutBook" name="checkoutBook">
   @foreach (var availablebook in Model["availableBooks"])
   {

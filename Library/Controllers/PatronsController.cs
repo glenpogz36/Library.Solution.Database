@@ -46,7 +46,7 @@ namespace Library.Controllers
             model.Add("availableBooks", availablebooks);
             return View(model);
         }
-        [HttpPost("/patrons/{id}")]
+        [HttpPost("/patrons/{id}/checkout/show")]
         public ActionResult Show(int checkoutBook, DateTime dueDate, int id)
         {
             Dictionary<string,object> model= new Dictionary<string,object>();
@@ -60,6 +60,22 @@ namespace Library.Controllers
             model.Add("patronBooks",patronBooks);
             return View(model);
         }
-
+        [HttpGet("/patrons/{id}/edit")]
+        public ActionResult Edit(int id)
+        {
+            Patron patron = Patron.Find(id);
+            return View(patron);
+        }
+        [HttpPost("/patrons/{id}")]
+        public ActionResult Show(string newPatron, int id)
+        {
+            Patron patron = Patron.Find(id);
+            patron.Edit(newPatron);
+            Dictionary<string,object> model= new Dictionary<string,object>();
+            List<Book> patronBooks= patron.GetBooks();
+            model.Add("patron",patron);
+            model.Add("patronBooks",patronBooks);
+            return View(model);
+        }
     }
 }

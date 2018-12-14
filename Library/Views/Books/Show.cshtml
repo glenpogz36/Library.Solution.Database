@@ -3,7 +3,7 @@
 }
 <hr>
 <div class="container">
-<h1>The book @Model["book"].GetTitle() is written by <a href='/authors/@Model["author"].GetId()'>@Model["author"].GetName()</a></h1>
+<h1>The book <a href='/books'>@Model["book"].GetTitle()</a> is written by <a href='/authors/@Model["author"].GetId()'>@Model["author"].GetName()</a></h1>
 <h3>This patrons checkout this book:</h3>
 <ol>
 @foreach (var patron in Model["patrons"])

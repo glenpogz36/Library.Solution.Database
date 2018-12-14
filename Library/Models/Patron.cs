@@ -153,6 +153,27 @@ namespace Library.Models
             }
             return books;
             }
-
+        public void Edit(string newPatron)
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"UPDATE patrons SET name = @newPatron WHERE id = @searchId;";
+         MySqlParameter searchId = new MySqlParameter();
+        searchId.ParameterName = "@searchId";
+        searchId.Value = _id;
+        cmd.Parameters.Add(searchId);
+         MySqlParameter name = new MySqlParameter();
+        name.ParameterName = "@newPatron";
+        name.Value = newPatron;
+        cmd.Parameters.Add(name);
+         cmd.ExecuteNonQuery();
+        _name = newPatron;
+         conn.Close();
+         if (conn != null)
+        {
+          conn.Dispose();
+        }
     }
+}
 }

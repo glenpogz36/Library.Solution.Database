@@ -3,7 +3,7 @@
 }
 <hr>
 <div class="container">
-<h1>List of all checkout books for @Model["patron"].GetName()</h1>
+<h1>List of all checkout books for <a href='/patrons'>@Model["patron"].GetName()</a></h1>
 <ol>
 @foreach (var book in Model["patronBooks"])
 {

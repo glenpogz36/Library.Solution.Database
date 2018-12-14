@@ -333,5 +333,28 @@ namespace Library.Models
             }
             return dueDate;
             }
+
+            public void Edit(string newTitle)
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"UPDATE books SET title = @newTitle WHERE id = @searchId;";
+         MySqlParameter searchId = new MySqlParameter();
+        searchId.ParameterName = "@searchId";
+        searchId.Value = _id;
+        cmd.Parameters.Add(searchId);
+         MySqlParameter title = new MySqlParameter();
+        title.ParameterName = "@newTitle";
+        title.Value = newTitle;
+        cmd.Parameters.Add(title);
+         cmd.ExecuteNonQuery();
+        _title = newTitle;
+         conn.Close();
+         if (conn != null)
+        {
+          conn.Dispose();
+        }
     }
+}
 }
